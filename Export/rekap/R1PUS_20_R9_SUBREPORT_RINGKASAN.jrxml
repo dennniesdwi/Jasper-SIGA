@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R1PUS_20_R9_SUBREPORT_RINGKASAN" pageWidth="1684" pageHeight="1191" orientation="Landscape" columnWidth="1644" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="53e587ad-74da-4670-b4cf-73b12bcd048a">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="bkkbnDs1"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="v_bulan" class="java.lang.Integer"/>
+	<parameter name="v_tahun" class="java.lang.Integer"/>
+	<parameter name="v_id_propinsi" class="java.lang.Integer"/>
+	<parameter name="v_id_kabupaten" class="java.lang.Integer"/>
+	<parameter name="v_id_kecamatan" class="java.lang.Integer"/>
+	<parameter name="v_id_kelurahan" class="java.lang.Integer"/>
+	<parameter name="v_id_rw" class="java.lang.Integer"/>
+	<parameter name="v_id_rt" class="java.lang.Integer"/>
+	<parameter name="nik" class="java.lang.String">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="v_nama" class="java.lang.String">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="v_id_kesertaan_jkn" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="v_status_pus" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="v_status_hamil" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="v_metode_kontrasepsi" class="java.lang.String">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="v_jalur_pelayanan" class="java.lang.String">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="v_ingin_anak_segera" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="v_ingin_anak_kemudian" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="v_tidak_ingin_anak_lagi" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="v_keluarga_sasaran_bkb" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="v_kesertaan_bkb" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="v_keluarga_sasaran_bkr" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="v_kesertaan_bkr" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="v_keluarga_sasaran_bkl" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="v_kesertaan_bkl" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="v_uppks_kesertaan" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="v_kesertaan_berkb" class="java.lang.String">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[select * from sigabaru.f_rekap_pk_siga_ringkasan($P{v_bulan}, $P{v_tahun}, $P{nik}, $P{v_nama},$P{v_id_propinsi}, $P{v_id_kabupaten}, $P{v_id_kecamatan}, $P{v_id_kelurahan}, $P{v_id_rw}, $P{v_id_rt}, $P{v_id_kesertaan_jkn}, $P{v_status_pus}, $P{v_status_hamil}, $P{v_metode_kontrasepsi}, $P{v_jalur_pelayanan}, $P{v_ingin_anak_segera}, $P{v_ingin_anak_kemudian}, $P{v_tidak_ingin_anak_lagi}, $P{v_keluarga_sasaran_bkb}, $P{v_kesertaan_bkb}, $P{v_keluarga_sasaran_bkr}, $P{v_kesertaan_bkr}, $P{v_keluarga_sasaran_bkl}, $P{v_kesertaan_bkl}, $P{v_uppks_kesertaan}, $P{v_kesertaan_berkb});]]>
+	</queryString>
+	<field name="jumlah_keluarga" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="jumlah_keluarga"/>
+		<property name="com.jaspersoft.studio.field.label" value="jumlah_keluarga"/>
+	</field>
+	<field name="jumlah_pus" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="jumlah_pus"/>
+		<property name="com.jaspersoft.studio.field.label" value="jumlah_pus"/>
+	</field>
+	<field name="jumlah_wanita_hamil" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="jumlah_wanita_hamil"/>
+		<property name="com.jaspersoft.studio.field.label" value="jumlah_wanita_hamil"/>
+	</field>
+	<field name="jumlah_unmet_need" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="jumlah_unmet_need"/>
+		<property name="com.jaspersoft.studio.field.label" value="jumlah_unmet_need"/>
+	</field>
+	<field name="pus_bukan_peserta_kb" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="pus_bukan_peserta_kb"/>
+		<property name="com.jaspersoft.studio.field.label" value="pus_bukan_peserta_kb"/>
+	</field>
+	<field name="ingin_anak" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ingin_anak"/>
+		<property name="com.jaspersoft.studio.field.label" value="ingin_anak"/>
+	</field>
+	<field name="ingin_anak_ditunda" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ingin_anak_ditunda"/>
+		<property name="com.jaspersoft.studio.field.label" value="ingin_anak_ditunda"/>
+	</field>
+	<field name="tidak_ingin_anak_lagi" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="tidak_ingin_anak_lagi"/>
+		<property name="com.jaspersoft.studio.field.label" value="tidak_ingin_anak_lagi"/>
+	</field>
+	<field name="sasaran_poktan" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="sasaran_poktan"/>
+		<property name="com.jaspersoft.studio.field.label" value="sasaran_poktan"/>
+	</field>
+	<field name="jlh_sasaran_bkb" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="jlh_sasaran_bkb"/>
+		<property name="com.jaspersoft.studio.field.label" value="jlh_sasaran_bkb"/>
+	</field>
+	<field name="jlh_sasaran_bkr" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="jlh_sasaran_bkr"/>
+		<property name="com.jaspersoft.studio.field.label" value="jlh_sasaran_bkr"/>
+	</field>
+	<field name="jlh_sasaran_bkl" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="jlh_sasaran_bkl"/>
+		<property name="com.jaspersoft.studio.field.label" value="jlh_sasaran_bkl"/>
+	</field>
+	<field name="jlh_kesertaan_bkb" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="jlh_kesertaan_bkb"/>
+		<property name="com.jaspersoft.studio.field.label" value="jlh_kesertaan_bkb"/>
+	</field>
+	<field name="jlh_kesertaan_bkr" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="jlh_kesertaan_bkr"/>
+		<property name="com.jaspersoft.studio.field.label" value="jlh_kesertaan_bkr"/>
+	</field>
+	<field name="jlh_kesertaan_bkl" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="jlh_kesertaan_bkl"/>
+		<property name="com.jaspersoft.studio.field.label" value="jlh_kesertaan_bkl"/>
+	</field>
+	<field name="jlh_kesertaan_uppka" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="jlh_kesertaan_uppka"/>
+		<property name="com.jaspersoft.studio.field.label" value="jlh_kesertaan_uppka"/>
+	</field>
+	<field name="kesertaan_poktan" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="kesertaan_poktan"/>
+		<property name="com.jaspersoft.studio.field.label" value="kesertaan_poktan"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

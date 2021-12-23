@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BKB_TEST-1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="06a6ba9e-7d56-4e02-bb90-71f54dcf1ecb">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="bkkbnDs1"/>
+	<queryString language="SQL">
+		<![CDATA[select 	a."KodePoktan"::varchar as kode_poktan,
+		a."NomorRegister"::varchar as no_register,
+		a."BKBID"::varchar as id_bkb,
+		a."NamaKelompok"::varchar as nama_kelompok,
+		coalesce(b."JabatanPengurusKetua", 0)::int as jabatan_ketua,
+		coalesce(b."JabatanPengurusSekretaris", 0)::int as jabatan_sekretaris,
+		coalesce(b."JabatanPengurusBendahara", 0)::int as jabatan_bendahara,
+		coalesce(b."JabatanPengurusKaderUmur0sd1Tahun", 0)::int as jabatan_kader0_1,
+		coalesce(b."JabatanPengurusKaderUmur1sd2Tahun", 0)::int as jabatan_kader1_2,
+		coalesce(b."JabatanPengurusKaderUmur2sd3Tahun", 0)::int as jabatan_kader2_3,
+		coalesce(b."JabatanPengurusKaderUmur3sd4Tahun", 0)::int as jabatan_kader3_4,
+		coalesce(b."JabatanPengurusKaderUmur4sd5Tahun", 0)::int as jabatan_kader4_5,
+		coalesce(b."JabatanPengurusKaderUmur5sd6Tahun", 0)::int as jabatan_kader5_6,
+		b."NIK"::varchar as nik_pengurus,
+		b."NamaPengurus"::varchar as nama_pengurus,
+		b."NoHP"::varchar as no_hp_pengurus,
+		a."MengetahuiPembinaNama"::varchar as mengetahui_pembina,
+		a."MengetahuiKetuaNama"::varchar as mengetahui_ketua,
+		a."MengetahuiTempat"::varchar as menyetujui_tempat,
+		a."MengetahuiTanggal"::date as menyetujui_tanggal
+	from sigabaru."dat_BKB" a
+	left join sigabaru."dat_PengurusKelompokBKB" b
+	on a."BKBID" = b."BKBID"
+	where a."BKBID" in ('1208181004','1208181006')
+	order by  a."BKBID";]]>
+	</queryString>
+	<field name="kode_poktan" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="kode_poktan"/>
+		<property name="com.jaspersoft.studio.field.label" value="kode_poktan"/>
+	</field>
+	<field name="no_register" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="no_register"/>
+		<property name="com.jaspersoft.studio.field.label" value="no_register"/>
+	</field>
+	<field name="id_bkb" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="id_bkb"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_bkb"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_BKB"/>
+	</field>
+	<field name="nama_kelompok" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nama_kelompok"/>
+		<property name="com.jaspersoft.studio.field.label" value="nama_kelompok"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_BKB"/>
+	</field>
+	<field name="jabatan_ketua" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="jabatan_ketua"/>
+		<property name="com.jaspersoft.studio.field.label" value="jabatan_ketua"/>
+	</field>
+	<field name="jabatan_sekretaris" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="jabatan_sekretaris"/>
+		<property name="com.jaspersoft.studio.field.label" value="jabatan_sekretaris"/>
+	</field>
+	<field name="jabatan_bendahara" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="jabatan_bendahara"/>
+		<property name="com.jaspersoft.studio.field.label" value="jabatan_bendahara"/>
+	</field>
+	<field name="jabatan_kader0_1" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="jabatan_kader0_1"/>
+		<property name="com.jaspersoft.studio.field.label" value="jabatan_kader0_1"/>
+	</field>
+	<field name="jabatan_kader1_2" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="jabatan_kader1_2"/>
+		<property name="com.jaspersoft.studio.field.label" value="jabatan_kader1_2"/>
+	</field>
+	<field name="jabatan_kader2_3" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="jabatan_kader2_3"/>
+		<property name="com.jaspersoft.studio.field.label" value="jabatan_kader2_3"/>
+	</field>
+	<field name="jabatan_kader3_4" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="jabatan_kader3_4"/>
+		<property name="com.jaspersoft.studio.field.label" value="jabatan_kader3_4"/>
+	</field>
+	<field name="jabatan_kader4_5" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="jabatan_kader4_5"/>
+		<property name="com.jaspersoft.studio.field.label" value="jabatan_kader4_5"/>
+	</field>
+	<field name="jabatan_kader5_6" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="jabatan_kader5_6"/>
+		<property name="com.jaspersoft.studio.field.label" value="jabatan_kader5_6"/>
+	</field>
+	<field name="nik_pengurus" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nik_pengurus"/>
+		<property name="com.jaspersoft.studio.field.label" value="nik_pengurus"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_PengurusKelompokBKB"/>
+	</field>
+	<field name="nama_pengurus" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nama_pengurus"/>
+		<property name="com.jaspersoft.studio.field.label" value="nama_pengurus"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_PengurusKelompokBKB"/>
+	</field>
+	<field name="no_hp_pengurus" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="no_hp_pengurus"/>
+		<property name="com.jaspersoft.studio.field.label" value="no_hp_pengurus"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_PengurusKelompokBKB"/>
+	</field>
+	<field name="mengetahui_pembina" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="mengetahui_pembina"/>
+		<property name="com.jaspersoft.studio.field.label" value="mengetahui_pembina"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_BKB"/>
+	</field>
+	<field name="mengetahui_ketua" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="mengetahui_ketua"/>
+		<property name="com.jaspersoft.studio.field.label" value="mengetahui_ketua"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_BKB"/>
+	</field>
+	<field name="menyetujui_tempat" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="menyetujui_tempat"/>
+		<property name="com.jaspersoft.studio.field.label" value="menyetujui_tempat"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_BKB"/>
+	</field>
+	<field name="menyetujui_tanggal" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="menyetujui_tanggal"/>
+		<property name="com.jaspersoft.studio.field.label" value="menyetujui_tanggal"/>
+	</field>
+	<group name="id_bkb">
+		<groupExpression><![CDATA[$F{id_bkb}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4_Landscape" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bf687d49-3a0d-4721-84de-e5353a722139">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="bkkbnDs1"/>
+	<queryString language="SQL">
+		<![CDATA[WITH cte_merge_anggota AS (
+select 
+a."KodePoktan"::varchar as kode_poktan,
+a."NomorRegister"::varchar as no_register,
+a."BKLID"::varchar as id_bkl,
+
+string_agg(distinct c."NIK", ',' order by  c."NIK") as nik_anggota , 
+string_agg(distinct c."NamaAnggota", ',' order by  c."NamaAnggota") as nama_anggota
+
+
+from sigabaru."dat_BKL" a
+left join sigabaru."dat_PengurusKelompokBKL" b
+on a."BKLID" = b."BKLID"
+left join sigabaru."dat_AnggotaKelompokBKL" c
+on a."BKLID" = c."BKLID"
+
+left join sigabaru."Kelurahan" w1
+on w1.id_kelurahan = a."KelurahanID"
+left join sigabaru."Kecamatan" w2
+on w2.id_kecamatan = a."KecamatanID"
+left join sigabaru."Kabupaten" w3
+on w3.id_kabupaten = a."KabupatenID"
+left join sigabaru."Provinsi" w4
+on w4.id_provinsi = a."ProvinsiID"
+where a."BKLID" in ('1218103002') 
+group by 
+a."KodePoktan", 
+a."NomorRegister",
+a."BKLID",
+a."NamaKelompok",
+b."NIK"
+--c."Nama",
+
+order by a."BKLID",b."NIK"
+
+)
+
+select * from cte_merge_anggota group by "kode_poktan", 
+"no_register",
+"id_bkl",
+"nik_anggota",
+"nama_anggota"]]>
+	</queryString>
+	<field name="kode_poktan" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="kode_poktan"/>
+		<property name="com.jaspersoft.studio.field.label" value="kode_poktan"/>
+	</field>
+	<field name="no_register" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="no_register"/>
+		<property name="com.jaspersoft.studio.field.label" value="no_register"/>
+	</field>
+	<field name="id_bkl" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="id_bkl"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_bkl"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_BKL"/>
+	</field>
+	<field name="nik_anggota" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nik_anggota"/>
+		<property name="com.jaspersoft.studio.field.label" value="nik_anggota"/>
+	</field>
+	<field name="nama_anggota" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nama_anggota"/>
+		<property name="com.jaspersoft.studio.field.label" value="nama_anggota"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="80" splitType="Stretch">
+			<textField>
+				<reportElement x="290" y="50" width="230" height="30" uuid="c1817479-de97-418d-b888-bf05e54cfc17"/>
+				<textFieldExpression><![CDATA[$F{nama_anggota}.split(",")[1]
+]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="119" y="46" width="100" height="30" uuid="5b96291f-ccd8-4607-aca4-e66b92d7bc63"/>
+				<textFieldExpression><![CDATA[$F{nik_anggota}.toString().split("\\,")[1]
+
+]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="220" height="30" uuid="64e82053-3c80-446b-9537-70dc79f7000d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bb2c8bb3-6835-464c-826c-21509f7f4936"/>
+				</reportElement>
+				<text><![CDATA[id_bkl]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="268" y="0" width="242" height="30" uuid="b0999177-980d-48e4-9af8-11dfd37f7da6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="371520f0-5f5a-4c3c-8499-c52c38d0e932"/>
+				</reportElement>
+				<text><![CDATA[nik_anggota]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="535" y="0" width="267" height="30" uuid="db4653f5-9ed2-4f41-829a-d3fd528fc55d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="263a2d20-1bb5-408f-ac1d-a184d060f5b8"/>
+				</reportElement>
+				<text><![CDATA[nama_anggota]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="220" height="30" uuid="dadb0b6d-da65-4515-9e2d-d5bdae676d77">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bb2c8bb3-6835-464c-826c-21509f7f4936"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{id_bkl}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="268" y="0" width="242" height="30" uuid="c9fce49d-57bd-47d9-910d-72c01cabe0e5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="371520f0-5f5a-4c3c-8499-c52c38d0e932"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nik_anggota}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="535" y="0" width="267" height="30" uuid="662670d1-c262-4f7c-8f4a-ee7e9bd15e9b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="263a2d20-1bb5-408f-ac1d-a184d060f5b8"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nama_anggota}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

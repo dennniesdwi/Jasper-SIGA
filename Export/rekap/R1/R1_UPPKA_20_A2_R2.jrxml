@@ -1,0 +1,1385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R1_UPPKA_20" pageWidth="1191" pageHeight="1684" whenNoDataType="NoDataSection" columnWidth="1151" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4280de0d-7e91-493e-b111-9535e22bef3d">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="bkkbnDs1"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="ireport.jasperserver.url" value="http://36.37.120.103:8081/jasperserver/"/>
+	<property name="ireport.jasperserver.user" value="jasperadmin"/>
+	<property name="ireport.jasperserver.report.resource" value="/Siga/Export/R1/R1UPPKA20_files/R1UPPKA20_"/>
+	<property name="ireport.jasperserver.reportUnit" value="/Siga/Export/R1/R1UPPKA20"/>
+	<parameter name="v_bulan" class="java.lang.String"/>
+	<parameter name="v_tahun" class="java.lang.Integer"/>
+	<parameter name="idr1uppka" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[select a."NamaKelompok" as nama_kelompok,
+        w4."KodeDepdagri" as kode_provinsi,
+        w3."KodeDepdagri" as kode_kabupaten,
+        w2."KodeDepdagri" as kode_kecamatan,
+        a."KodePoktan" as kode_poktan,
+        a."NomorRegister" as no_register,
+        to_char(b."TanggalKegiatan", 'DD')::int as tanggal_lapor,
+        to_char(b."TanggalKegiatan", 'MM')::int as bulan_lapor,
+        to_char(b."TanggalKegiatan", 'YYYY')::int as tahun_lapor,
+        case when b."PenyajiNaraSumberPKBPLKB" = 1 then 1 else 0 end as penyaji_pkb_plkb,
+        case when b."PenyajiNaraSumberPPKBD" = 1 then 1 else 0 end as penyaji_ppkbd,
+        case when b."PenyajiNaraSumberSubPPKBD" = 1 then 1 else 0 end as penyaji_sub_ppkbd,
+        case when b."PenyajiNaraSumberLainnya" = 1 then 1 else 0 end as penyaji_lainnya,
+        case when b."PenyajiNaraSumberLainnya" = 1 then b."PenyajiNaraSumberLainnyaDeskripsi" end as penyaji_lainnya_deskripsi,
+        case when b."MateriPenyuluhan01" = 1 then 1 else 0 end as materi_keuangan_mengenal_nilai_uang,
+        case when b."MateriPenyuluhan02" = 1 then 1 else 0 end as materi_keuangan_menjaga_ketahanan_ekonomi,
+        case when b."MateriPenyuluhan03" = 1 then 1 else 0 end as materi_keuangan_menjadi_lansia_produktif,
+        case when b."MateriPenyuluhan04" = 1 then 1 else 0 end as materi_keuangan_kemandirian_ekonomi,
+        case when b."MateriPenyuluhan05" = 1 then 1 else 0 end as materi_usaha_uppka,
+        case when b."MateriPenyuluhan06" = 1 then 1 else 0 end as materi_usaha_8_langkah_penghasilan,
+        case when b."MateriPenyuluhan07" = 1 then 1 else 0 end as materi_usaha_pengelolaan_usaha_kelompok,
+        case when b."MateriPenyuluhan08" = 1 then 1 else 0 end as materi_usaha_menjadi_uppka_sukses,
+        case when b."MateriPenyuluhan09" = 1 then 1 else 0 end as materi_kie_kb,
+        case when b."MateriPenyuluhanLainnya" = 1 then 1 else 0 end as materi_lainnya,
+        case when b."MateriPenyuluhanLainnya" = 1 then b."MateriPenyuluhanLainnyaDeskripsi" end as materi_lainnya_deskripsi,
+        case when b."MetodePenyuluhan" = 1 then 1 else 0 end as metode_tatap_muka,
+        case when b."MetodePenyuluhan" = 2 then 1 else 0 end as metode_virtual,
+        c."NamaPeserta" as nama_peserta,
+        case when c."StatusPUS" = 1 then 1 else 0 end as status_pus,
+        case when c."StatusBerKB" = 1 then 1 else 0 end as status_berkb,
+        c."MetodeKontrasepsi" as metode_kontrasepsi,
+        b."MengetahuiPembinaNama" as mengetahui_pembina,
+        b."MengetahuiKetuaNama" as mengetahui_ketua
+from sigabaru."dat_UPPKA" a
+left join sigabaru."dat_KegiatanUPPKA" b
+on a."UPPKAID" = b."UPPKAID"
+left join sigabaru."dat_PesertaKegiatanUPPKA" c
+on a."UPPKAID" = c."UPPKAID"
+and b."TanggalKegiatan" = c."TanggalKegiatan"
+left join sigabaru."Kelurahan" w1
+on w1."id_kelurahan" = a."KelurahanID"
+left join sigabaru."Kecamatan" w2
+on w2."id_kecamatan" = a."KecamatanID"
+left join sigabaru."Kabupaten" w3
+on w3."id_kabupaten" = a."KabupatenID"
+left join sigabaru."Provinsi" w4
+on w4."id_provinsi" = a."ProvinsiID"
+where a."UPPKAID" in ($P!{idr1uppka})
+and b."Bulan"::int in ($P!{v_bulan}) 
+and b."Tahun"::int = $P{v_tahun}
+
+order by b."Bulan", w4."KodeDepdagri", w3."KodeDepdagri", a."UPPKAID";]]>
+	</queryString>
+	<field name="nama_kelompok" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nama_kelompok"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_UPPKA"/>
+	</field>
+	<field name="kode_provinsi" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="kode_provinsi"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Provinsi"/>
+	</field>
+	<field name="kode_kabupaten" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="kode_kabupaten"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Kabupaten"/>
+	</field>
+	<field name="kode_kecamatan" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="kode_kecamatan"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Kecamatan"/>
+	</field>
+	<field name="kode_poktan" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="kode_poktan"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_UPPKA"/>
+	</field>
+	<field name="no_register" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="no_register"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_UPPKA"/>
+	</field>
+	<field name="tanggal_lapor" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="tanggal_lapor"/>
+	</field>
+	<field name="bulan_lapor" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="bulan_lapor"/>
+	</field>
+	<field name="tahun_lapor" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="tahun_lapor"/>
+	</field>
+	<field name="penyaji_pkb_plkb" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="penyaji_pkb_plkb"/>
+	</field>
+	<field name="penyaji_ppkbd" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="penyaji_ppkbd"/>
+	</field>
+	<field name="penyaji_sub_ppkbd" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="penyaji_sub_ppkbd"/>
+	</field>
+	<field name="penyaji_lainnya" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="penyaji_lainnya"/>
+	</field>
+	<field name="penyaji_lainnya_deskripsi" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="penyaji_lainnya_deskripsi"/>
+	</field>
+	<field name="materi_keuangan_mengenal_nilai_uang" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="materi_keuangan_mengenal_nilai_uang"/>
+	</field>
+	<field name="materi_keuangan_menjaga_ketahanan_ekonomi" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="materi_keuangan_menjaga_ketahanan_ekonomi"/>
+	</field>
+	<field name="materi_keuangan_menjadi_lansia_produktif" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="materi_keuangan_menjadi_lansia_produktif"/>
+	</field>
+	<field name="materi_keuangan_kemandirian_ekonomi" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="materi_keuangan_kemandirian_ekonomi"/>
+	</field>
+	<field name="materi_usaha_uppka" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="materi_usaha_uppka"/>
+	</field>
+	<field name="materi_usaha_8_langkah_penghasilan" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="materi_usaha_8_langkah_penghasilan"/>
+	</field>
+	<field name="materi_usaha_pengelolaan_usaha_kelompok" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="materi_usaha_pengelolaan_usaha_kelompok"/>
+	</field>
+	<field name="materi_usaha_menjadi_uppka_sukses" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="materi_usaha_menjadi_uppka_sukses"/>
+	</field>
+	<field name="materi_kie_kb" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="materi_kie_kb"/>
+	</field>
+	<field name="materi_lainnya" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="materi_lainnya"/>
+	</field>
+	<field name="materi_lainnya_deskripsi" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="materi_lainnya_deskripsi"/>
+	</field>
+	<field name="metode_tatap_muka" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="metode_tatap_muka"/>
+	</field>
+	<field name="metode_virtual" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="metode_virtual"/>
+	</field>
+	<field name="nama_peserta" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nama_peserta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_PesertaKegiatanUPPKA"/>
+	</field>
+	<field name="status_pus" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="status_pus"/>
+	</field>
+	<field name="status_berkb" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="status_berkb"/>
+	</field>
+	<field name="metode_kontrasepsi" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="metode_kontrasepsi"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_PesertaKegiatanUPPKA"/>
+	</field>
+	<field name="mengetahui_pembina" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="mengetahui_pembina"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_KegiatanUPPKA"/>
+	</field>
+	<field name="mengetahui_ketua" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="mengetahui_ketua"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_KegiatanUPPKA"/>
+	</field>
+	<group name="nama_kelompok">
+		<groupExpression><![CDATA[$F{nama_kelompok}]]></groupExpression>
+		<groupHeader>
+			<band height="790">
+				<textField>
+					<reportElement x="1101" y="102" width="50" height="30" uuid="8f1b9d44-80ae-4bb0-bb66-7c6091e85f6c"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{tahun_lapor}!=null?$F{tahun_lapor}:""]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1086" y="102" width="15" height="15" uuid="dbb62376-37cb-4ac7-81d9-afc781f73065">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bulan_lapor}.equals( 6 )?"V":"6"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="1052" y="8" width="98" height="32" forecolor="#FCFCFC" backcolor="#050505" uuid="9f17a1d4-3dd3-437f-8dc7-ff8c02f71266"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[R/I/UPPKA/20]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="554" y="100" width="31" height="31" uuid="dd3ddff7-598e-4d98-b29a-960553bb206f">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="16"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{kode_kecamatan}!=null?$F{kode_kecamatan}.substring(0, 1):""]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="343" width="371" height="30" uuid="b71ed5bc-ba0a-4245-a521-234dc379a5fd"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[2. MATERI PENYULUHAN]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="16" y="310" width="18" height="18" uuid="c9cc318d-e948-4407-a037-65779c408bae"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{penyaji_pkb_plkb}==null?"":$F{penyaji_pkb_plkb}==1 ? "V":""]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="369" y="100" width="31" height="31" uuid="d2033d21-9292-4384-ac30-e2209d23cf66">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="16"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{kode_provinsi}!=null?$F{kode_provinsi}.substring(0, 1):""]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="17" y="634" width="363" height="19" uuid="502bf7c9-b416-45d9-98be-f120fcac753d"/>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<text><![CDATA[* Dapat dipilih lebih dari satu]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="69" y="740" width="342" height="50" uuid="7fc60efc-9d37-449b-96e2-0a4bebc99f6e"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+						<font size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["NAMA"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="17" y="544" width="363" height="30" uuid="ef3b47e5-299e-41d3-9d84-c96f6f6b956d"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[MATERI KESEHATAN REPRODUKSI]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="493" y="100" width="31" height="31" uuid="b6062919-ef8c-42c0-b27d-9d5123526f24">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="16"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{kode_kabupaten}!=null?$F{kode_kabupaten}.substring(1, 2):""]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="200" y="307" width="130" height="22" uuid="00834b03-21de-4d6e-b1e6-62e3adc6e5af"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<text><![CDATA[2. PPKBD]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="17" y="484" width="18" height="18" uuid="83de1078-62b4-47c7-a5e7-38b2b8b929ac"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{materi_keuangan_menjadi_lansia_produktif}==null?"":$F{materi_keuangan_menjadi_lansia_produktif}==1 ? "V":""]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="625" y="739" width="196" height="50" uuid="2b244a38-5659-4db5-8d21-e6096ad97133">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+						<font size="16" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["STATUS Ber-KB"+ "\n"+ " (V) Jika Ya"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1026" y="102" width="15" height="15" uuid="2cbb62ef-d9b8-480f-a235-ecb3b398adc4">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bulan_lapor}.equals( 2 )?"V":"2"]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="609" y="596" width="151" height="1" uuid="d5cf2f97-c6fe-4eb0-8d18-0a0660038fc2"/>
+				</line>
+				<textField>
+					<reportElement x="609" y="573" width="372" height="22" uuid="d48ceb6f-ec57-4819-8e20-a5ff1f68c41e"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{materi_lainnya_deskripsi}!=null?$F{materi_lainnya_deskripsi}:""]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="526" y="573" width="83" height="22" uuid="9ccc4def-a5f8-44b2-9780-d47828c7502d"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<text><![CDATA[2. Lainnya]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="260" width="371" height="30" uuid="add5e28d-75e0-431d-86ba-9f2607d0fae2"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[1. PENYAJI/NARASUMBER]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="176" y="310" width="18" height="18" uuid="cc2a610d-c191-49e7-8e14-c4169e8305a0"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{penyaji_ppkbd}==null?"":$F{penyaji_ppkbd}==1 ? "V":""]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1011" y="102" width="15" height="15" uuid="7ca5d84f-0ece-4c90-87f2-de38ee2da57d">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bulan_lapor}.equals( 1 )?"V":"1"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="16" y="366" width="355" height="19" uuid="38ea4a7f-2b9e-451d-9974-5587b5873d4b"/>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<text><![CDATA[* Dapat dipilih lebih dari satu]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="646" y="100" width="31" height="31" uuid="41fd6e33-0be3-40ca-9b47-c84d9162c4e4">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="16"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{kode_poktan}!=null?$F{kode_poktan}:""]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="41" y="423" width="440" height="22" uuid="67f774de-80a5-4212-bff8-c51dd025681a"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<text><![CDATA[1. Mengenal Nilai Uang dan Belajar Menabung]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="543" y="132" width="87" height="25" uuid="f26506ac-2f22-45b4-bf9e-6de2dc0047dc"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<text><![CDATA[Kode Kecamatan]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="526" y="656" width="225" height="22" uuid="c01b18bb-5922-4856-83db-8f19a690da62"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<text><![CDATA[2. Pertemuan Virtual]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="1" y="100" width="280" height="31" uuid="8708ff67-1a62-4484-92c3-cae6107be060">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="16"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nama_kelompok}!=null?$F{nama_kelompok}:""]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="502" y="659" width="18" height="18" uuid="c787a764-720a-4d3c-b447-e937585050dd"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{metode_virtual}==null?"":$F{metode_virtual}==1 ? "V":""]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="1101" y="88" width="50" height="14" uuid="f1078582-70b1-4723-9eeb-5eedb0dee567"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<text><![CDATA[Tahun]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1" y="740" width="58" height="50" uuid="1266fe8b-790d-43fd-8ff1-8427ad56c751"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="16" isBold="true"/>
+					</textElement>
+					<text><![CDATA[NO.]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="769" y="100" width="31" height="31" uuid="75edfc0a-3d92-4318-a367-a0701d22addf">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="16"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{no_register}!=null?$F{no_register}.substring(2, 3):""]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="419" y="739" width="196" height="50" uuid="0276e9a4-dec5-4abb-a837-15a2db986878"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+						<font size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["STATUS PUS"+ "\n"+ " (V) Jika Ya"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="1015" y="88" width="86" height="14" uuid="b11efeca-7d11-48ed-b7d5-920617fda7b9">
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+						<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="Arial" size="9"/>
+						<paragraph leftIndent="0" rightIndent="5"/>
+					</textElement>
+					<text><![CDATA[Bulan Lapor]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="17" y="393" width="363" height="30" uuid="71018ccb-d2bc-4a03-9608-f4ec55914a88"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PENGELOLAAN KEUANGAN KELUARGA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="451" y="132" width="84" height="25" uuid="ff2eec60-511c-45d0-ac49-a288ace8e3fd"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<text><![CDATA[Kode Kabupaten/ Kota]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="501" y="393" width="371" height="30" uuid="b9a77a08-2e6b-4b4f-b84b-38279de6da0f">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[USAHA EKONOMI KELUARGA]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="502" y="454" width="18" height="18" uuid="55b6604f-d78b-4db4-b9a5-6fe2845502f8"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{materi_usaha_8_langkah_penghasilan}==null?"":$F{materi_usaha_8_langkah_penghasilan}==1 ? "V":""]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="17" y="514" width="18" height="18" uuid="a42f8de9-f3be-4ab8-baa5-30de73bc4149"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{materi_keuangan_kemandirian_ekonomi}==null?"":$F{materi_keuangan_kemandirian_ekonomi}==1 ? "V":""]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="20" width="1150" height="68" uuid="e68bdda2-9b10-494c-b0e5-0f2f3eafc18f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="22" isBold="true"/>
+					</textElement>
+					<text><![CDATA[USAHA PENINGKATAN PENDAPATAN KELUARGA AKSEPTOR
+(UPPKA)]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="502" y="425" width="18" height="18" uuid="a13d5242-e689-4915-b804-bdc63f3261bc"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{materi_usaha_uppka}==null?"":$F{materi_usaha_uppka}==1 ? "V":""]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="644" y="131" width="36" height="25" uuid="42bda467-8493-4c75-967d-d66128acde5d"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<text><![CDATA[Kode Poktan]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="526" y="423" width="556" height="22" uuid="adec33fe-3702-49da-8ff7-d27c78041707"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<text><![CDATA[1. Materi Usaha Peningkatan Pendapatan Keluarga Akseptor (UPPKA)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="526" y="482" width="556" height="22" uuid="938b7472-6e99-4883-b005-209788a5a055"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<text><![CDATA[3. Pengelolaan Usaha Kelompok]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="17" y="454" width="18" height="18" uuid="fee0566f-bdfa-488b-836c-b7028a9f2949"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{materi_keuangan_menjaga_ketahanan_ekonomi}==null?"":$F{materi_keuangan_menjaga_ketahanan_ekonomi}==1 ? "V":""]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="503" y="310" width="18" height="18" uuid="2b9cd5d2-e7f9-4bd7-b3fc-f727832c33fa"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{penyaji_lainnya}==null?"":$F{penyaji_lainnya}==1 ? "V":""]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="830" y="739" width="320" height="50" uuid="4b08c93c-2099-4baf-aeff-af6c3b3e0a69"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+						<font size="16" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["METODE KONTRASEPSI"+ "\n"+ "YANG DIGUNAKAN"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="220" width="371" height="30" uuid="f2b3edfe-de71-44c4-8816-5febe01a2850">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[KEGIATAN PERTEMUAN PENYULUHAN]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="41" y="482" width="440" height="22" uuid="bd1d961a-0c2c-4930-946a-fbaff6684185"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<text><![CDATA[3. Rahasia Menjadi Lansia Produktif]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="1071" y="117" width="15" height="15" uuid="9472543d-3167-470c-a86d-da7f715f6517">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bulan_lapor}.equals( 11 )?"V":"11"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1026" y="117" width="15" height="15" uuid="b280687a-7724-41fe-ab6f-4c696640aba1">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bulan_lapor}.equals( 8)?"V":"8"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1056" y="117" width="15" height="15" uuid="235258df-0381-4051-be24-91889f39b666">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bulan_lapor}.equals( 10 )?"V":"10"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="368" y="132" width="64" height="25" uuid="eb7caffb-9284-40b5-a6d9-ae9dde9b1fed"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<text><![CDATA[Kode Provinsi]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="981" y="102" width="30" height="30" uuid="8a1a8b42-63fd-440e-81fd-cf56d6235842">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="16"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{tanggal_lapor}!=null?$F{tanggal_lapor}:""]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="336" y="310" width="18" height="18" uuid="367764cf-f8a0-489b-9a2f-70adc9c6723a"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{penyaji_sub_ppkbd}==null?"":$F{penyaji_sub_ppkbd}==1 ? "V":""]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="17" y="575" width="18" height="18" uuid="3c79210d-ada4-4f20-9183-68ab9956b3f1"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{materi_kie_kb}==null?"": "V"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="16" y="284" width="355" height="19" uuid="09f83573-523d-4244-8aca-fbc2abdddf5d"/>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<text><![CDATA[* Dapat dipilih lebih dari satu]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="1086" y="117" width="15" height="15" uuid="09c9e984-a37e-411f-b604-01e395ced9c7">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bulan_lapor}.equals( 12 )?"V":"12"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="686" y="308" width="366" height="22" uuid="c962e524-d74c-4213-929a-6eb9e9d54f98"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{penyaji_lainnya_deskripsi}!=null?$F{penyaji_lainnya_deskripsi}:""]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="526" y="512" width="556" height="22" uuid="ec34a9f2-a350-4715-a5d1-49ed3d1019a8"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<text><![CDATA[4. Rahasia Menjadi Anggota Kelompok UPPKA Sukses]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="526" y="452" width="556" height="22" uuid="2042edc7-a217-43ce-b6c6-f5fce9cf13c6"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<text><![CDATA[2. 8 Langkah Tingkatkan Penghasilan Keluarga]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1" y="610" width="379" height="30" uuid="3c3a69e5-7a24-4a51-af83-0076b68ead89"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[3. METODE PERTEMUAN]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="1056" y="102" width="15" height="15" uuid="526d310b-decf-4eae-9a21-dd2504b30443">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bulan_lapor}.equals( 4 )?"V":"4"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="707" y="100" width="31" height="31" uuid="14477abb-4382-4d0d-b990-a30f1083c320">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="16"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{no_register}!=null?$F{no_register}.substring(0, 1):""]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="17" y="425" width="18" height="18" uuid="1bf0503c-29a8-46fd-96ea-30eae8ab2cd8"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{materi_keuangan_mengenal_nilai_uang}==null?"":$F{materi_keuangan_mengenal_nilai_uang}==1 ? "V":""]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="75" y="86" width="130" height="14" uuid="f3a334f7-08c8-467e-8c3a-f5a540d84509"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<text><![CDATA[Nama Kelompok Kegiatan]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="180" y="8" width="800" height="20" uuid="0a65c6c1-81a2-433a-b6aa-cd9dc2653ffc"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="15"/>
+					</textElement>
+					<text><![CDATA[REGISTER PEMBINAAN KETAHANAN KELUARGA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="360" y="307" width="125" height="22" uuid="bc3eaa3d-081b-4ba0-a581-62a7b029353c"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<text><![CDATA[3. Sub PPKBD]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="502" y="484" width="18" height="18" uuid="624d9498-09e5-446b-975f-b19fee858ec3"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{materi_usaha_pengelolaan_usaha_kelompok}==null?"":$F{materi_usaha_pengelolaan_usaha_kelompok}==1 ? "V":""]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="689" y="132" width="128" height="25" uuid="bf6d700f-1aec-41d9-ae44-fbde6ad163cf"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<text><![CDATA[ Nomor Register Kelompok]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="40" y="308" width="129" height="22" uuid="b79f0a71-a1e5-46ed-b8a3-71e83ecd4bc5"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<text><![CDATA[1. PKB/PLKB]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="41" y="512" width="440" height="22" uuid="449b0ce6-957e-4cdd-b484-ca0257915e74"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<text><![CDATA[4. Rahasia Kemandirian Ekonomi Keluarga]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="585" y="100" width="31" height="31" uuid="99bf0179-c7d9-453a-9265-fcb88750aec9">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="16"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{kode_kecamatan}!=null?$F{kode_kecamatan}.substring(1, 2):""]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="697" width="751" height="30" uuid="eeb0eb84-c672-43fc-9b2a-793cfb28f701"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[4. ANGGOTA KELOMPOK YANG HADIR DALAM PERTEMUAN]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="1101" y="102" width="50" height="30" uuid="96590ed8-a0e5-414f-b6cd-181734e8dcbf"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{tahun_lapor}!=null?$F{tahun_lapor}:""]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="41" y="656" width="230" height="22" uuid="9efb5af9-092e-4f0b-8507-6041606e8eb7"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<text><![CDATA[1. Tatap Muka Langsung]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="738" y="100" width="31" height="31" uuid="3b69c463-5b47-4351-b80a-1ef00e37dca1">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="16"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{no_register}!=null?$F{no_register}.substring(1, 2):""]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="400" y="100" width="31" height="31" uuid="f37e9204-9a11-445b-9dde-7c9b19abef47">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="16"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{kode_provinsi}!=null?$F{kode_provinsi}.substring(1, 2):""]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="41" y="573" width="339" height="22" uuid="2b551aef-141f-41ff-b1d4-3a2748443613"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<text><![CDATA[1. KIE KB dan Kesehatan Reproduksi]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="1041" y="117" width="15" height="15" uuid="5650dba5-2229-498a-ab8d-af5641489f22">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bulan_lapor}.equals( 9 )?"V":"9"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="462" y="100" width="31" height="31" uuid="810b24bd-a5bd-41b2-a63c-fad117ddd6ac">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="16"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{kode_kabupaten}!=null?$F{kode_kabupaten}.substring(0, 1):""]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="527" y="308" width="159" height="22" uuid="644c225d-45e2-4ce9-85ff-857b1c9b55d1"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<text><![CDATA[4.  Lainnya, Sebutkan]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="1041" y="102" width="15" height="15" uuid="00b59a11-477c-4a28-81d8-49df5867224d">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bulan_lapor}.equals( 3 )?"V":"3"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="41" y="452" width="440" height="22" uuid="bbc24347-2a27-4888-b3a9-cb194fa11b5b"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<text><![CDATA[2. Rahasia Menjaga Ketahanan Ekonomi Keluarga]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="1011" y="117" width="15" height="15" uuid="189a0b44-fded-45c1-aba4-c344df8cd1a7">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bulan_lapor}.equals( 7 )?"V":"7"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="17" y="658" width="18" height="18" uuid="1d497e57-a271-4875-8f55-c03c9cab3fe1"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{metode_tatap_muka}==null?"":$F{metode_tatap_muka}==1 ? "V":""]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="502" y="575" width="18" height="18" uuid="5499890d-ca21-4011-a479-2444763583d9"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{materi_lainnya}==null?"":$F{materi_lainnya}==1 ? "V":""]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="975" y="88" width="40" height="14" uuid="b7420380-d37b-47fe-9dd6-7724335bccce"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<text><![CDATA[Tanggal]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="502" y="514" width="18" height="18" uuid="11dcbd09-6177-4a24-bbb4-37e0356732b0"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{materi_usaha_menjadi_uppka_sukses}==null?"":$F{materi_usaha_menjadi_uppka_sukses}==1 ? "V":""]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1071" y="102" width="15" height="15" uuid="e565da6b-2c0d-4864-a858-fd9f06069afe">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bulan_lapor}.equals( 5 )?"V":"5"]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="686" y="331" width="138" height="1" uuid="fb1aa4c8-e244-4a20-8071-b5216b8db055"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="221">
+				<staticText>
+					<reportElement x="726" y="189" width="424" height="24" uuid="fedc47b8-f917-4a00-b01f-cae00c9d02cc">
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="14" isBold="true"/>
+						<paragraph leftIndent="10"/>
+					</textElement>
+					<text><![CDATA[( ................................................................)]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="38" y="180" width="407" height="30" uuid="82b8443f-f84f-44d7-8737-daf82fbaf597"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{mengetahui_pembina}!=null?$F{mengetahui_pembina}:""]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="38" y="189" width="407" height="24" uuid="4f70f186-4676-4694-9d50-06308dc23859">
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="14"/>
+						<paragraph leftIndent="10"/>
+					</textElement>
+					<text><![CDATA[( .......................................................................)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="726" y="24" width="423" height="72" uuid="d7a6aff1-1c40-4057-96b9-b6352e10bff1"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="16" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Ketua Kelompok]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="726" y="179" width="424" height="30" uuid="5e5605f5-1b79-409f-9920-53ddf423628a"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{mengetahui_ketua}!=null?$F{mengetahui_ketua}:""]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="40" y="24" width="405" height="71" uuid="a75fda80-f4c7-4a1e-96c4-c7d5bf8e1c3a"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="16" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Mengetahui,
+Pembina Kelompok]]></text>
+				</staticText>
+				<break>
+					<reportElement x="0" y="220" width="97" height="1" uuid="911f092d-312c-4427-bc7c-b9718fd78bca"/>
+				</break>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="1" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement x="69" y="6" width="342" height="21" uuid="ff52456a-af7d-43c9-8b4a-e47361a1cef2">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nama_peserta}!=null?$F{nama_peserta}:""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="831" y="6" width="320" height="21" uuid="599c6d5e-9cb7-4f50-8e2a-98ad02bd61e1"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{metode_kontrasepsi}==null?"":$F{metode_kontrasepsi}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="625" y="6" width="196" height="21" uuid="658c3d7e-d334-45ab-a19e-beeef298d5ac">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{status_berkb}==null?"":$F{status_berkb}==1 ? "V":""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="419" y="6" width="196" height="21" uuid="333f820e-a8cc-4e14-b39a-1909223f4c99">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{status_pus}==null?"":$F{status_pus}==1 ? "V":""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="6" width="58" height="21" uuid="5b6f0dec-84a6-4db6-b4c0-fcd492b38c66"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{nama_kelompok_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<noData>
+		<band height="65">
+			<staticText>
+				<reportElement x="0" y="5" width="1151" height="60" forecolor="#FA0C07" uuid="e819dce7-930d-4067-98ba-feb4fa4eb389"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[" HASIL PENCARIAN DATA TIDAK DITEMUKAN ! "]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

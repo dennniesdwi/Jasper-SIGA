@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Export_RDK_test" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="12727530-d12d-42d8-9283-0a02d1dff35c">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="bkkbnDs1"/>
+	<parameter name="id_rdkik" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[select w4."KodeDepdagri" as kode_provinsi,
+w3."KodeDepdagri" as kode_kabupaten,
+w2."KodeDepdagri" as kode_kecamatan,
+w1."KodeDepdagri" as kode_kelurahan,
+a."KodePoktan" as kode_poktan,
+a."NomorRegister" as no_register,
+a."RDKIKID" as id_rdkik,
+
+a."AlamatJalan" as nama_jalan,
+w1.nama_kelurahan as nama_kelurahan,
+w2.nama_kecamatan as nama_kecamatan,
+w3.nama_kabupaten as nama_kabupaten,
+w4.nama_provinsi as nama_provinsi,
+a."JabatanPembinaID" as jabatan_pembina,
+a."JabatanPembinaLainnya" as jabatan_pembina_lainnya,
+a."NamaPembina" as nama_pebina,
+coalesce(a."SKPengukuhanAda", 2) as sk_ada_tidak,
+a."NomorSK" as sk_nomor,
+a."TanggalSK"::date as sk_tanggal,
+a."SKDikeluarkanOlehID" as sk_dikeluarkan_oleh,
+coalesce(a."SumberDanaAPBN", 0) as sumber_apbn,
+coalesce(a."SumberDanaAPBD", 0) as sumber_apbd,
+coalesce(a."SumberDanaADD", 0) as sumber_add,
+coalesce(a."SumberDanaSWADAYA", 0) as sumber_swadaya,
+coalesce(a."SumberDanaSwastaCSR", 0) as sumber_swasta_csr,
+coalesce(a."SumberDanaLAINNYA"::int, 0) as sumber_lainnya,
+case when a."SumberDanaLAINNYA"::int = 1 then a."SumberDanaLAINNYADeskripsi" end as sumber_lainnya_deskripsi,
+b."JabatanPengurusKelompokID" as id_jabatan_pengurus,
+b."NIK" as nik_pengurus,
+b."NamaPengurus" as nama_pengurus,
+b."NoHP" as no_hp_pengurus,
+coalesce(b."PelatihanPengelolaanRumahData", 0) as pel_pengel_rumah_data,
+coalesce(b."PelatihanPengolahanData", 0) as pel_pengol_data,
+coalesce(b."PelatihanAnalisisData", 0) as pel_analisis_data,
+coalesce(b."BelumDilatih", 0) as pel_belum,
+coalesce(a."Sarana1", 2) as sarana_papan_nama,
+coalesce(a."Sarana2", 2) as sarana_display_data,
+coalesce(a."Sarana3", 2) as sarana_buku_data,
+coalesce(a."Sarana4", 2) as sarana_jar_internet,
+coalesce(a."Sarana5", 2) as sarana_komputer,
+coalesce(a."Sarana6", 2) as sarana_printer,
+coalesce(a."Sarana7", 2) as sarana_pojok_kependd,
+coalesce(a."SaranaLainnya", 2) as sarana_lainnya,
+a."SaranaLainnyaDeskripsi" as sarana_lainnya_deskripsi,
+coalesce(a."KelompokData1", 2) as kelmdata_kuantitas_pndd,
+coalesce(a."KelompokData2", 2) as kelmdata_kualitas_pendd,
+coalesce(a."KelompokData3", 2) as kelmdata_mobilitas_pendd,
+coalesce(a."KelompokData4", 2) as kelmdata_pemb_klg,
+coalesce(a."KelompokData5", 2) as kelmdata_admin_kependd,
+coalesce(a."KelompokData6", 2) as kelmdata_perlindungan_sosial,
+coalesce(a."KelompokData7", 2) as kelmdata_potensi_desa,
+coalesce(a."PemanfaatanDataPerencanaan", 0) as keg_pemanfaatan_perencanaan,
+coalesce(a."PemanfaatanDataIntervensi", 0) as keg_pemanfaatan_intervensi,
+coalesce(a."PemanfaatanDataPenelitian", 0) as keg_pemanfaatan_penelitian,
+coalesce(a."PemanfaatanDataLainnya", 0) as keg_pemanfaatan_lain,
+coalesce(a."PemanfaatPemerintah", 0) as pemanfaat_pemerintah,
+coalesce(a."PemanfaatSwasta", 0) as pemanfaat_swasta,
+coalesce(a."PemanfaatAkademisi", 0) as pemanfaat_akademisi,
+coalesce(a."PemanfaatLainnya", 0) as pemanfaat_lain,
+a."MengetahuiPembinaKelompokNama" as mengetahui_pembina,
+a."MengetahuiKetuaKelompkNama" as mengetahui_ketua
+from sigabaru."dat_RDKIK" a
+left join sigabaru."dat_PengurusKelompkRDKIK" b
+on a."RDKIKID" = b."RDKIKID"
+
+left join sigabaru."Kelurahan" w1
+on w1.id_kelurahan = a."KelurahanID"
+left join sigabaru."Kecamatan" w2
+on w2.id_kecamatan = a."KecamatanID"
+left join sigabaru."Kabupaten" w3
+on w3.id_kabupaten = a."KabupatenID"
+left join sigabaru."Provinsi" w4
+on w4.id_provinsi = a."ProvinsiID"
+where a."RDKIKID"   in ($P!{id_rdkik})]]>
+	</queryString>
+	<field name="kode_provinsi" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="kode_provinsi"/>
+		<property name="com.jaspersoft.studio.field.label" value="kode_provinsi"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Provinsi"/>
+	</field>
+	<field name="kode_kabupaten" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="kode_kabupaten"/>
+		<property name="com.jaspersoft.studio.field.label" value="kode_kabupaten"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Kabupaten"/>
+	</field>
+	<field name="kode_kecamatan" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="kode_kecamatan"/>
+		<property name="com.jaspersoft.studio.field.label" value="kode_kecamatan"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Kecamatan"/>
+	</field>
+	<field name="kode_kelurahan" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="kode_kelurahan"/>
+		<property name="com.jaspersoft.studio.field.label" value="kode_kelurahan"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Kelurahan"/>
+	</field>
+	<field name="kode_poktan" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="kode_poktan"/>
+		<property name="com.jaspersoft.studio.field.label" value="kode_poktan"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_RDKIK"/>
+	</field>
+	<field name="no_register" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="no_register"/>
+		<property name="com.jaspersoft.studio.field.label" value="no_register"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_RDKIK"/>
+	</field>
+	<field name="id_rdkik" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="id_rdkik"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_rdkik"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_RDKIK"/>
+	</field>
+	<field name="nama_jalan" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nama_jalan"/>
+		<property name="com.jaspersoft.studio.field.label" value="nama_jalan"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_RDKIK"/>
+	</field>
+	<field name="nama_kelurahan" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nama_kelurahan"/>
+		<property name="com.jaspersoft.studio.field.label" value="nama_kelurahan"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Kelurahan"/>
+	</field>
+	<field name="nama_kecamatan" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nama_kecamatan"/>
+		<property name="com.jaspersoft.studio.field.label" value="nama_kecamatan"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Kecamatan"/>
+	</field>
+	<field name="nama_kabupaten" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nama_kabupaten"/>
+		<property name="com.jaspersoft.studio.field.label" value="nama_kabupaten"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Kabupaten"/>
+	</field>
+	<field name="nama_provinsi" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nama_provinsi"/>
+		<property name="com.jaspersoft.studio.field.label" value="nama_provinsi"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Provinsi"/>
+	</field>
+	<field name="jabatan_pembina" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="jabatan_pembina"/>
+		<property name="com.jaspersoft.studio.field.label" value="jabatan_pembina"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_RDKIK"/>
+	</field>
+	<field name="jabatan_pembina_lainnya" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="jabatan_pembina_lainnya"/>
+		<property name="com.jaspersoft.studio.field.label" value="jabatan_pembina_lainnya"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_RDKIK"/>
+	</field>
+	<field name="nama_pebina" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nama_pebina"/>
+		<property name="com.jaspersoft.studio.field.label" value="nama_pebina"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_RDKIK"/>
+	</field>
+	<field name="sk_ada_tidak" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="sk_ada_tidak"/>
+		<property name="com.jaspersoft.studio.field.label" value="sk_ada_tidak"/>
+	</field>
+	<field name="sk_nomor" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="sk_nomor"/>
+		<property name="com.jaspersoft.studio.field.label" value="sk_nomor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_RDKIK"/>
+	</field>
+	<field name="sk_tanggal" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="sk_tanggal"/>
+		<property name="com.jaspersoft.studio.field.label" value="sk_tanggal"/>
+	</field>
+	<field name="sk_dikeluarkan_oleh" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="sk_dikeluarkan_oleh"/>
+		<property name="com.jaspersoft.studio.field.label" value="sk_dikeluarkan_oleh"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_RDKIK"/>
+	</field>
+	<field name="sumber_apbn" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="sumber_apbn"/>
+		<property name="com.jaspersoft.studio.field.label" value="sumber_apbn"/>
+	</field>
+	<field name="sumber_apbd" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="sumber_apbd"/>
+		<property name="com.jaspersoft.studio.field.label" value="sumber_apbd"/>
+	</field>
+	<field name="sumber_add" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="sumber_add"/>
+		<property name="com.jaspersoft.studio.field.label" value="sumber_add"/>
+	</field>
+	<field name="sumber_swadaya" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="sumber_swadaya"/>
+		<property name="com.jaspersoft.studio.field.label" value="sumber_swadaya"/>
+	</field>
+	<field name="sumber_swasta_csr" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="sumber_swasta_csr"/>
+		<property name="com.jaspersoft.studio.field.label" value="sumber_swasta_csr"/>
+	</field>
+	<field name="sumber_lainnya" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="sumber_lainnya"/>
+		<property name="com.jaspersoft.studio.field.label" value="sumber_lainnya"/>
+	</field>
+	<field name="sumber_lainnya_deskripsi" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="sumber_lainnya_deskripsi"/>
+		<property name="com.jaspersoft.studio.field.label" value="sumber_lainnya_deskripsi"/>
+	</field>
+	<field name="id_jabatan_pengurus" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_jabatan_pengurus"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_jabatan_pengurus"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_PengurusKelompkRDKIK"/>
+	</field>
+	<field name="nik_pengurus" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nik_pengurus"/>
+		<property name="com.jaspersoft.studio.field.label" value="nik_pengurus"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_PengurusKelompkRDKIK"/>
+	</field>
+	<field name="nama_pengurus" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nama_pengurus"/>
+		<property name="com.jaspersoft.studio.field.label" value="nama_pengurus"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_PengurusKelompkRDKIK"/>
+	</field>
+	<field name="no_hp_pengurus" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="no_hp_pengurus"/>
+		<property name="com.jaspersoft.studio.field.label" value="no_hp_pengurus"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_PengurusKelompkRDKIK"/>
+	</field>
+	<field name="pel_pengel_rumah_data" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="pel_pengel_rumah_data"/>
+		<property name="com.jaspersoft.studio.field.label" value="pel_pengel_rumah_data"/>
+	</field>
+	<field name="pel_pengol_data" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="pel_pengol_data"/>
+		<property name="com.jaspersoft.studio.field.label" value="pel_pengol_data"/>
+	</field>
+	<field name="pel_analisis_data" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="pel_analisis_data"/>
+		<property name="com.jaspersoft.studio.field.label" value="pel_analisis_data"/>
+	</field>
+	<field name="pel_belum" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="pel_belum"/>
+		<property name="com.jaspersoft.studio.field.label" value="pel_belum"/>
+	</field>
+	<field name="sarana_papan_nama" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="sarana_papan_nama"/>
+		<property name="com.jaspersoft.studio.field.label" value="sarana_papan_nama"/>
+	</field>
+	<field name="sarana_display_data" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="sarana_display_data"/>
+		<property name="com.jaspersoft.studio.field.label" value="sarana_display_data"/>
+	</field>
+	<field name="sarana_buku_data" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="sarana_buku_data"/>
+		<property name="com.jaspersoft.studio.field.label" value="sarana_buku_data"/>
+	</field>
+	<field name="sarana_jar_internet" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="sarana_jar_internet"/>
+		<property name="com.jaspersoft.studio.field.label" value="sarana_jar_internet"/>
+	</field>
+	<field name="sarana_komputer" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="sarana_komputer"/>
+		<property name="com.jaspersoft.studio.field.label" value="sarana_komputer"/>
+	</field>
+	<field name="sarana_printer" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="sarana_printer"/>
+		<property name="com.jaspersoft.studio.field.label" value="sarana_printer"/>
+	</field>
+	<field name="sarana_pojok_kependd" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="sarana_pojok_kependd"/>
+		<property name="com.jaspersoft.studio.field.label" value="sarana_pojok_kependd"/>
+	</field>
+	<field name="sarana_lainnya" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="sarana_lainnya"/>
+		<property name="com.jaspersoft.studio.field.label" value="sarana_lainnya"/>
+	</field>
+	<field name="sarana_lainnya_deskripsi" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="sarana_lainnya_deskripsi"/>
+		<property name="com.jaspersoft.studio.field.label" value="sarana_lainnya_deskripsi"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_RDKIK"/>
+	</field>
+	<field name="kelmdata_kuantitas_pndd" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="kelmdata_kuantitas_pndd"/>
+		<property name="com.jaspersoft.studio.field.label" value="kelmdata_kuantitas_pndd"/>
+	</field>
+	<field name="kelmdata_kualitas_pendd" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="kelmdata_kualitas_pendd"/>
+		<property name="com.jaspersoft.studio.field.label" value="kelmdata_kualitas_pendd"/>
+	</field>
+	<field name="kelmdata_mobilitas_pendd" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="kelmdata_mobilitas_pendd"/>
+		<property name="com.jaspersoft.studio.field.label" value="kelmdata_mobilitas_pendd"/>
+	</field>
+	<field name="kelmdata_pemb_klg" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="kelmdata_pemb_klg"/>
+		<property name="com.jaspersoft.studio.field.label" value="kelmdata_pemb_klg"/>
+	</field>
+	<field name="kelmdata_admin_kependd" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="kelmdata_admin_kependd"/>
+		<property name="com.jaspersoft.studio.field.label" value="kelmdata_admin_kependd"/>
+	</field>
+	<field name="kelmdata_perlindungan_sosial" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="kelmdata_perlindungan_sosial"/>
+		<property name="com.jaspersoft.studio.field.label" value="kelmdata_perlindungan_sosial"/>
+	</field>
+	<field name="kelmdata_potensi_desa" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="kelmdata_potensi_desa"/>
+		<property name="com.jaspersoft.studio.field.label" value="kelmdata_potensi_desa"/>
+	</field>
+	<field name="keg_pemanfaatan_perencanaan" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="keg_pemanfaatan_perencanaan"/>
+		<property name="com.jaspersoft.studio.field.label" value="keg_pemanfaatan_perencanaan"/>
+	</field>
+	<field name="keg_pemanfaatan_intervensi" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="keg_pemanfaatan_intervensi"/>
+		<property name="com.jaspersoft.studio.field.label" value="keg_pemanfaatan_intervensi"/>
+	</field>
+	<field name="keg_pemanfaatan_penelitian" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="keg_pemanfaatan_penelitian"/>
+		<property name="com.jaspersoft.studio.field.label" value="keg_pemanfaatan_penelitian"/>
+	</field>
+	<field name="keg_pemanfaatan_lain" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="keg_pemanfaatan_lain"/>
+		<property name="com.jaspersoft.studio.field.label" value="keg_pemanfaatan_lain"/>
+	</field>
+	<field name="pemanfaat_pemerintah" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="pemanfaat_pemerintah"/>
+		<property name="com.jaspersoft.studio.field.label" value="pemanfaat_pemerintah"/>
+	</field>
+	<field name="pemanfaat_swasta" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="pemanfaat_swasta"/>
+		<property name="com.jaspersoft.studio.field.label" value="pemanfaat_swasta"/>
+	</field>
+	<field name="pemanfaat_akademisi" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="pemanfaat_akademisi"/>
+		<property name="com.jaspersoft.studio.field.label" value="pemanfaat_akademisi"/>
+	</field>
+	<field name="pemanfaat_lain" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="pemanfaat_lain"/>
+		<property name="com.jaspersoft.studio.field.label" value="pemanfaat_lain"/>
+	</field>
+	<field name="mengetahui_pembina" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="mengetahui_pembina"/>
+		<property name="com.jaspersoft.studio.field.label" value="mengetahui_pembina"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_RDKIK"/>
+	</field>
+	<field name="mengetahui_ketua" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="mengetahui_ketua"/>
+		<property name="com.jaspersoft.studio.field.label" value="mengetahui_ketua"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dat_RDKIK"/>
+	</field>
+	<group name="id_rdkik">
+		<groupExpression><![CDATA[$F{id_rdkik}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="95" height="30" uuid="5c507261-267c-4b8a-8ee7-606a06eb0366">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5b870307-6f67-4174-9dcd-ef71bd1f004c"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[id_rdkik]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="95" y="0" width="92" height="30" uuid="da3edf89-f770-49c4-a976-372b33dd7525">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="37d3424a-df92-4e76-85d0-7dd50c7e6c40"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[nama_jalan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="187" y="0" width="92" height="30" uuid="37f7eeb6-c6c7-4753-aab7-d54d92a93de0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="74192284-9858-4f18-bbf4-11e2737018ca"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[nama_kelurahan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="0" width="92" height="30" uuid="da11ec02-ee3b-4fef-8da8-6de5846fe3c6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e0e56525-4323-4933-936c-a7e3aa408f7b"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[nama_kecamatan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="371" y="0" width="92" height="30" uuid="6abb5455-a8de-46de-a85e-78e889825b03">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2d8ec99e-6a92-43f7-9f07-d5a30f13c8e8"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[nama_kabupaten]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="463" y="0" width="92" height="30" uuid="20b49130-7069-4abf-8cd7-4aa6cd6b5790">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b594105e-a99b-4c80-ada6-c3b7a1fae397"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[nama_provinsi]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="95" height="30" uuid="1de4a457-99a9-4964-97d5-a5a9b82931a2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5b870307-6f67-4174-9dcd-ef71bd1f004c"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{id_rdkik}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="95" y="0" width="92" height="30" uuid="963155bb-017e-4593-b967-04fd3801062e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="37d3424a-df92-4e76-85d0-7dd50c7e6c40"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nama_jalan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="187" y="0" width="92" height="30" uuid="75e3d2e6-bb7d-4b2a-871c-d45604e0be50">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="74192284-9858-4f18-bbf4-11e2737018ca"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nama_kelurahan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="279" y="0" width="92" height="30" uuid="65bfbcc8-034b-4aa5-86e4-f3bbe1e56100">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e0e56525-4323-4933-936c-a7e3aa408f7b"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nama_kecamatan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="371" y="0" width="92" height="30" uuid="ae83f048-3e12-403b-b896-d7ffcbdf6a31">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2d8ec99e-6a92-43f7-9f07-d5a30f13c8e8"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nama_kabupaten}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="463" y="0" width="92" height="30" uuid="f068e06c-342e-4bd9-9e8b-262a4ca62c6d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b594105e-a99b-4c80-ada6-c3b7a1fae397"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nama_provinsi}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

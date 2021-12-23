@@ -1,0 +1,85 @@
+CREATE OR REPLACE FUNCTION sigabaru.f_rekap_pk_siga_individu(v_bulan integer, v_tahun integer, v_nomor_keluarga character varying)
+ RETURNS TABLE(kki character varying, nik character varying, nama character varying, hubungan_dengan_kk character varying, tanggal_lahir date, usia integer, sumber_data character varying, mutasi_individu character varying, tgl_mutasi_individu timestamp without time zone)
+ LANGUAGE sql
+AS $function$
+		SELECT COALESCE(COALESCE(rek.kki, pk.kki), bkb.kki) AS kki,
+            COALESCE(COALESCE(rek.nik, pk.nik), bkb.nik) AS nik,
+            COALESCE(COALESCE(rek.nama, pk.nama), bkb.nama) AS nama,
+            COALESCE(COALESCE(rek.hubungan_dengan_kk, pk.hubungan_dengan_kk::character varying), 'KK')::varchar AS hubungan_dengan_kk,
+            COALESCE(rek.tanggal_lahir, pk.tanggal_lahir) as tanggal_lahir,
+            COALESCE(rek.usia, pk.usia)::int as usia,
+			(case when rek.kki is not null or rek.created_date is not null then 'REKAP'
+				else coalesce(bkb.sumber_data, pk.sumber_data) 
+			end)::varchar as sumber_data,
+			(case when rek.id_mutasi_individu = 1 then 'MENIKAH'
+				when rek.id_mutasi_individu = 2 then 'BERCERAI'
+				when rek.id_mutasi_individu = 3 then 'MENINGGAL DUNIA'
+				when rek.id_mutasi_individu = 4 then 'ANGGOTA KELUARGA BARU'
+				when rek.id_mutasi_individu = 5 then 'PINDAH'
+			else rek.id_mutasi_individu::varchar end)::varchar as mutasi_individu,
+			rek.tgl_mutasi_individu
+           FROM 
+             ------- << source Rekap >> -------
+           	 (select hd.kki
+				,di.nik
+				,di.nama
+				,di.hubungan_dengan_kk
+				,di.tanggal_lahir
+				,to_char(age(now(), di.tanggal_lahir::timestamp with time zone), 'YYYY'::text)::integer as usia
+				,coalesce(di.created_date, hd.created_date ) as created_date
+				,di.id_mutasi_individu
+				,di.tgl_mutasi_individu
+			from sigabaru.rekap_pk_siga_head hd
+			left join sigabaru.rekap_pk_siga_dtl_individu di
+			on hd.id_rekap = di.id_rekap
+			left join (select * from (
+					select a.*,
+						lead(a.id_rekap) OVER (PARTITION BY a.id_rekap ORDER BY a.created_date) as flag
+					from sigabaru.rekap_pk_siga_dtl_keluarga a
+					WHERE --a.bulan_rekap <= COALESCE(v_bulan, to_char(now(), 'MM'::text)::integer)
+--					AND a.tahun_rekap <= COALESCE(v_tahun, to_char(now(), 'YYYY'::text)::integer)
+					concat(tahun_rekap::varchar, lpad(bulan_rekap::varchar,2,'0')) <= coalesce(concat(v_tahun::varchar, lpad(v_bulan::varchar,2,'0')), to_char(now(), 'YYYYMM'))
+					) b
+				where b.flag is null) dk
+			on hd.id_rekap = dk.id_rekap
+			where hd.kki = v_nomor_keluarga) rek
+             ------- << source PK >> -------
+             full join (select a.kki
+				,a.nik
+				,a.nama
+				,a.hubungan_dengan_kk
+				,a.tanggal_lahir
+				,to_char(age(now(), a.tanggal_lahir::timestamp with time zone), 'YYYY'::text)::integer as usia
+				,a.sumber_data
+             	from sigabaru.rekap_pk_tmp_inherit a
+             where a.kki = v_nomor_keluarga) pk
+             ON COALESCE(rek.kki, '-'::character varying)::text = COALESCE(pk.kki, '-'::character varying)::text 
+             AND COALESCE(rek.nik, '-'::character varying)::text = COALESCE(pk.nik, '-'::text) 
+             AND btrim(rek.nama::text) = btrim(pk.nama::text)
+             ------- << source poktan + YanKB >> -------
+             FULL JOIN ( SELECT *
+                  FROM ( SELECT a.*,
+                            lead(tahun_rekap) OVER (PARTITION BY a.kki ORDER BY a.tahun_rekap, a.bulan_rekap) AS flag
+                           FROM sigabaru.rekap_siga_tmp a
+                          WHERE --bulan_rekap::integer <= COALESCE(v_bulan, to_char(now(), 'MM'::text)::integer) 
+--                          AND tahun_rekap::integer <= COALESCE(v_tahun, to_char(now(), 'YYYY'::text)::integer)
+                          (concat(tahun_rekap::varchar, lpad(bulan_rekap::varchar,2,'0')))::int <= (coalesce(concat(v_tahun::varchar, lpad(v_bulan::varchar,2,'0')), to_char(now(), 'YYYYMM')))::int
+                          ) b
+                  WHERE b.flag IS null
+                  and b.kki = v_nomor_keluarga) bkb 
+                  ON COALESCE(COALESCE(rek.kki, pk.kki), '-'::character varying)::text = COALESCE(bkb.kki, '-'::character varying)::text
+		   	where (rek.tgl_mutasi_individu is null or to_char(rek.tgl_mutasi_individu, 'YYYYMM') >= coalesce(concat(v_tahun::varchar, lpad(v_bulan::varchar,2,'0')), to_char(now(), 'YYYYMM')))
+			order by --coalesce(rek.usia, pk.usia) desc
+			(case when COALESCE(COALESCE(rek.hubungan_dengan_kk, pk.hubungan_dengan_kk::character varying), 'KK') = 'KK' then 1
+				when COALESCE(COALESCE(rek.hubungan_dengan_kk, pk.hubungan_dengan_kk::character varying), 'KK') = 'Istri' then 2
+				when COALESCE(COALESCE(rek.hubungan_dengan_kk, pk.hubungan_dengan_kk::character varying), 'KK') = 'Anak' then 3
+				else 4 end),
+			COALESCE(rek.tanggal_lahir, pk.tanggal_lahir)
+			;
+$function$
+;
+
+-- Permissions
+
+ALTER FUNCTION sigabaru.f_rekap_pk_siga_individu(int4,int4,varchar) OWNER TO developer;
+GRANT ALL ON FUNCTION sigabaru.f_rekap_pk_siga_individu(int4,int4,varchar) TO developer;

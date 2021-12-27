@@ -2,18 +2,33 @@
 <!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="K0_Tabel4" pageWidth="1008" pageHeight="612" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="e654574b-1bf4-4067-a812-f9d29bee8546">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="bkkbnDs2"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="bkkbnDs1"/>
 	<property name="ireport.jasperserver.url" value="http://36.37.120.103:8081/jasperserver/"/>
 	<property name="ireport.jasperserver.user" value="jasperadmin"/>
 	<property name="ireport.jasperserver.report.resource" value="/Siga/YanKB/Tahunan/Tabel4_files/Tabel4_"/>
 	<property name="ireport.jasperserver.reportUnit" value="/Siga/YanKB/Tahunan/Tabel4"/>
+	<property name="net.sf.jasperreports.export.xls.remove.empty.space.between.columns" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.remove.empty.space.between.rows" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.create.custom.palette" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.one.page.per.sheet" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.white.page.background" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.detect.cell.type" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.size.fix.enabled" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.ignore.graphics" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.collapse.row.span" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.ignore.cell.border" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.ignore.cell.background" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.max.rows.per.sheet=0"/>
+	<property name="net.sf.jasperreports.export.xls.wrap.text" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.column.width.ratio" value="1.10f"/>
+	<property name="net.sf.jasperreports.export.xls.image.border.fix.enabled" value="false"/>
 	<parameter name="v_bulan" class="java.lang.Integer"/>
 	<parameter name="v_tahun" class="java.lang.Integer"/>
 	<parameter name="v_id_propinsi" class="java.lang.Integer"/>
 	<parameter name="v_id_kabupaten" class="java.lang.Integer"/>
 	<parameter name="v_id_kecamatan" class="java.lang.Integer"/>
 	<queryString language="SQL">
-		<![CDATA[select * from sigabaru.f_laporan_yankb_tabel4($P{v_bulan},$P{v_tahun},$P{v_id_propinsi},$P{v_id_kabupaten},$P{v_id_kecamatan})]]>
+		<![CDATA[select * from sigabaru.f_laporan_yankb_tabel4($P{v_bulan},$P{v_tahun},$P{v_id_propinsi},$P{v_id_kabupaten},$P{v_id_kecamatan});]]>
 	</queryString>
 	<field name="kategori_wilayah" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="kategori_wilayah"/>
